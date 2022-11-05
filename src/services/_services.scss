@@ -1,0 +1,48 @@
+.services {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 20px;
+
+  @include tablet {
+    grid-template-columns: auto auto;
+  }
+
+  @include mobile {
+    grid-template-columns: auto;
+    grid-gap: 15px;
+  }
+
+  &__card {
+    @include flex(center, center);
+    color: $txt-primary-color;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+      rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+      rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+    &:hover {
+      transform: translateY(-20px);
+      transition: transform 0.5s ease;
+      color: $txt-hover-color;
+    }
+
+    &__icon {
+      font-size: 2rem;
+      padding: 5px;
+    }
+
+    &__contents {
+      margin-left: 10px;
+      h1 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+      }
+      p {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}

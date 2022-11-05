@@ -1,0 +1,74 @@
+.footer {
+  background-color: $txt-primary-color;
+  padding-top: 60px;
+  padding-bottom: 30px;
+
+  @include tablet {
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+
+  @include mobile {
+    padding-top: 40px;
+    padding-bottom: 15px;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 360px 1fr 1fr 300px;
+    grid-gap: 20px;
+    color: #fff;
+    @include tablet {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+    &__col1 {
+      &__logo {
+        @include flex(center, flex-start);
+        column-gap: 8px;
+        &__icon {
+          font-size: 2rem;
+        }
+        &__name {
+          font-size: 2rem;
+          font-weight: 600;
+        }
+      }
+
+      &__description {
+        padding-top: 30px;
+        line-height: 1.5rem;
+      }
+    }
+
+    &__col2,
+    &__col3,
+    &__col4 {
+      &__title {
+        h4 {
+          margin-bottom: 20px;
+        }
+
+        li {
+          line-height: 2.4rem;
+        }
+        p:hover {
+          color: #fff;
+        }
+      }
+    }
+    @include tablet {
+      &__col1 {
+        order: 1;
+      }
+    }
+  }
+
+  .copyright {
+    text-align: center;
+    margin-top: 50px;
+  }
+}

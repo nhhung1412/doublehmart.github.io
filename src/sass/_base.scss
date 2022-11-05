@@ -1,0 +1,83 @@
+@import "./variables";
+@import "./mixin"; // google font
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+
+// reset browser default
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  @include mobile {
+    width: 90%;
+  }
+  @include tablet {
+    width: 85%;
+  }
+}
+
+section {
+  padding: 60px 0;
+  @include tablet {
+    padding: 50px 0;
+  }
+  @include mobile {
+    padding: 40px 0;
+  }
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  margin-top: $header-height;
+  @include tablet {
+    margin-top: $header-tablet-height;
+  }
+  @include mobile {
+    margin-top: $header-mobile-height;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  color: $txt-small-color;
+  font-size: 1rem;
+}
+
+h1,
+h2 {
+  font-size: $txt-heading-fontSize;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+img {
+  width: 100%;
+}
+
+button {
+  outline: 0;
+  border: 0;
+  overflow: hidden;
+}

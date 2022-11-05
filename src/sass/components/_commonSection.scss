@@ -1,0 +1,15 @@
+.common__section {
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.562), rgba(0, 0, 0, 0.562)),
+    url("https://img.freepik.com/free-photo/living-room-interior-wall-mockup-warm-tones-with-leather-sofa-which-is-kitchen-3d-rendering_41470-3753.jpg?w=826&t=st=1666973491~exp=1666974091~hmac=cb84996acea4d27bcdd2314a27c88902e0ea3b211e2f21ba4c7ce6da0ac40a81")
+      no-repeat center center;
+  background-size: cover;
+  height: 300px;
+  @include flex(center, center);
+  padding: 100px 0;
+
+  h1 {
+    color: #fff;
+    font-weight: 600;
+  }
+}
