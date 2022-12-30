@@ -2,8 +2,8 @@
 @import "./mixin";
 @import "./variables";
 
-@import "../components/Footer/Footer.module.scss";
-@import "../components/Header/Header.module.scss";
+@import "./components/Footer.module.scss";
+@import "./components/Header.module.scss";
 @import "./components/productCard.scss";
 @import "./components/clock.scss";
 @import "./components/commonSection.scss";

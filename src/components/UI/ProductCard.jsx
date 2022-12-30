@@ -15,14 +15,14 @@ const ProductCard = ({ item }) => {
 
   return (
     <>
-      <div className="product__card">
+      <Link to={`/shop/${item.id}`} className="product__card">
         <div className="product__card__img">
           <motion.img whileHover={{ scale: 0.9 }} src={item.imgUrl} alt="" />
         </div>
         <div className="product__card__contents">
           <div className="product__card__contents__top">
             <h3 onClick={() => window.scrollTo(0, 0)}>
-              <Link to={`/shop/${item.id}`}>{item.productName}</Link>
+              {item.productName}
             </h3>
             <span>{item.category}</span>
           </div>
@@ -33,7 +33,7 @@ const ProductCard = ({ item }) => {
             </motion.span>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
