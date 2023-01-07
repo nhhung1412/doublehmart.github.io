@@ -13,19 +13,19 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const signIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       setLoading(false);
-
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
       const user = userCredential.user;
-
+      console.log(user);
       toast.success("Successfully logged in");
       navigate("/checkout");
     } catch (error) {

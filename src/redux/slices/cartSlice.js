@@ -20,12 +20,12 @@ const cartSlice = createSlice({
       if (itemIndex >= 0) {
         state.cartItems[itemIndex].cartQuantity += 1;
         toast.info(
-          `Increased ${state.cartItems[itemIndex].productName} cart quantity`
+          `Increased ${state.cartItems[itemIndex].title} cart quantity`
         );
       } else {
         const tempProduct = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProduct);
-        toast.success(`Add '${action.payload.productName}' to cart`);
+        toast.success(`Add '${action.payload.title}' to cart`);
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },

@@ -53,10 +53,10 @@ const Cart = () => {
               <div>
                 {cart.cartItems.map((item) => (
                   <div className="cart__mobile__wrapper" key={item.id}>
-                    <img src={item.imgUrl} alt="" />
+                    <img src={item.productImg} alt="" />
 
                     <div className="cart__mobile__wrapper__content">
-                      <h4>{item.productName}</h4>
+                      <h4>{item.title}</h4>
 
                       <div className="cart__mobile__wrapper__content__bottom">
                         <span className="cart__mobile__wrapper__content__bottom__price">
@@ -114,9 +114,9 @@ const Cart = () => {
                   {cart.cartItems.map((item) => (
                     <tr key={item.id}>
                       <td>
-                        <img src={item.imgUrl} alt="" />
+                        <img src={item.productImg} alt="" />
                       </td>
-                      <td>{item.productName}</td>
+                      <td>{item.title}</td>
                       <td>${item.price}</td>
                       <td>
                         <div className="quantity">
@@ -157,12 +157,15 @@ const Cart = () => {
               </div>
               <p>Taxes and shipping calculated at checkout!</p>
               <div>
-                <motion.button
-                  whileTap={{ scale: 1.2 }}
-                  className="cart__right__btn"
-                >
-                  <Link to="/checkout">Check out</Link>
-                </motion.button>
+
+                <Link to="/checkout">
+                  <motion.button
+                    whileTap={{ scale: 1.2 }}
+                    className="cart__right__btn"
+                  >
+                    Check out
+                  </motion.button>
+                </Link>
                 <motion.button
                   whileTap={{ scale: 1.2 }}
                   className="cart__right__btn"
@@ -170,12 +173,16 @@ const Cart = () => {
                 >
                   Clear Cart
                 </motion.button>
-                <motion.button
-                  whileTap={{ scale: 1.2 }}
-                  className="cart__right__btn"
-                >
-                  <Link to="/shop">Continue Shopping</Link>
-                </motion.button>
+
+                <Link to="/shop">
+                  <motion.button
+                    whileTap={{ scale: 1.2 }}
+                    className="cart__right__btn"
+                  >
+                    Continue Shopping
+                  </motion.button>
+                </Link>
+
               </div>
             </div>
           </div>

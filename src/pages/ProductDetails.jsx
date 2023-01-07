@@ -1,17 +1,27 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+// import {useSelector } from "react-redux";
 
 import { motion } from "framer-motion";
 import { addToCart } from "../redux/slices/cartSlice";
 
-import products from "../assets/fake-data/products";
 import Helmet from "../components/Helmet/Helmet";
 import ProductLists from "../components/UI/ProductLists";
 
+import { useGetData } from '../custom-hooks/useGetData'
+import { db } from '../firebase.config'
+import { getDoc, doc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 const ProductDetails = () => {
+
+
+  const { data: products } = useGetData('products')
+  const { data: reviews } = useGetData('reviews')
+
+  const [product, setProduct] = useState({})
   const [rating, setRating] = useState(0);
   const [expand, setExpand] = useState(false);
   const [tab, setTab] = useState("desc");
@@ -21,50 +31,84 @@ const ProductDetails = () => {
 
   const { id } = useParams();
 
-  const cart = useSelector((state) => state.cart);
+
+
   const dispatch = useDispatch();
 
-  const product = products.find((item) => item.id === id);
+  useEffect(() => {
+    const getProduct = async () => {
+      const docRef = doc(db, 'products', id)
+      const docSnap = await getDoc(docRef)
+      if (docSnap.exists()) {
+        setProduct(docSnap.data())
+      } else {
+        console.log('No product!')
+      }
+    }
+    return () => {
+      getProduct()
+    }
+  }, [])
+
 
   const {
     category,
-    imgUrl,
-    productName,
+    productImg,
+    title,
     price,
-    avgRating,
-    reviews,
     shortDesc,
     description,
   } = product;
+
+  useEffect(() => {
+    const getReview = async () => {
+      const review = []
+      const docReviewSnap = (db, 'reviews', id);
+      if (docReviewSnap.exists()) {
+        review.push(docReviewSnap.data())
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }
+
+    return () => {
+      getReview()
+    }
+  }, [])
+
+
 
   const addItem = () => {
     dispatch(addToCart(product));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const reviewUserName = reviewUser.current.value;
     const reviewUserMsg = reviewMsg.current.value;
-
-    const previewObj = {
+    // Add a new document with a generated id.
+    await addDoc(collection(db, "reviews"), {
       userName: reviewUserName,
       message: reviewUserMsg,
       rating,
-    };
-
-    setTimeout(() => {
-      console.log(previewObj);
-      document.submit.reset();
-    }, 2000);
-
-    const resolveAfter2Sec = new Promise((resolve) =>
-      setTimeout(resolve, 2000)
-    );
-    toast.promise(resolveAfter2Sec, {
-      pending: "Please wait....",
-      success: "Added succesfully",
-      error: "Added unsuccesfully",
     });
+    toast.success('Added successfully')
+
+
+
+    // setTimeout(() => {
+    //   document.submit.reset();
+    // }, 2000);
+
+    // const resolveAfter2Sec = new Promise((resolve) =>
+    //   setTimeout(resolve, 2000)
+    // );
+    // toast.promise(resolveAfter2Sec, {
+    //   pending: "Please wait....",
+    //   success: "Added succesfully",
+    //   error: "Added unsuccesfully",
+    // });
   };
 
   const relatedProducts = products.filter((e) => e.category === category);
@@ -82,19 +126,19 @@ const ProductDetails = () => {
   };
 
   return (
-    <Helmet title={productName}>
+    <Helmet title={title}>
       <div className="container pt-40">
         <div className="productDetail">
           <div className="productDetail__img">
-            <img src={imgUrl} alt="" />
+            <img src={productImg} alt="" />
           </div>
           <div className="productDetail__content">
-            <h2>{productName}</h2>
+            <h2>{title}</h2>
             <h3>{category}</h3>
             <div className="productDetail__content__rating">
               <ReactStars
                 count={5}
-                value={avgRating}
+                value={rating}
                 size={40}
                 isHalf={true}
                 edit={false}
@@ -102,7 +146,7 @@ const ProductDetails = () => {
                 activeColor="#0a1d37"
               />
               <p>
-                (<span>{avgRating}</span> ratings)
+                (<span>{rating}</span> ratings)
               </p>
             </div>
             <span className="productDetail__content__price">${price}</span>
@@ -132,7 +176,7 @@ const ProductDetails = () => {
               className={`${tab === "rev" ? "active__tab" : ""}`}
               onClick={() => setTab("rev")}
             >
-              Reviews ({reviews.length})
+              Reviews({reviews.length})
             </h6>
           </div>
           {tab === "desc" ? (
@@ -149,13 +193,16 @@ const ProductDetails = () => {
             <div className="tab__review">
               <div className="tab__review__wrapper">
                 <ul>
-                  {reviews.map((item, index) => (
-                    <li key={index}>
-                      <h3>{item.reviewerName}</h3>
-                      <span>({item.rating} ratings)</span>
-                      <p>{item.text}</p>
-                    </li>
-                  ))}
+                  {
+                    reviews.map((item) => (
+                      <li key={item.id}>
+                        <h3>{item.userName}</h3>
+                        <span>({item.rating} ratings)</span>
+                        <p>{item.message}</p>
+                      </li>
+                    ))
+                  }
+
                 </ul>
               </div>
               <hr />

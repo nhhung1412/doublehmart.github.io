@@ -10,6 +10,14 @@ import Shop from "../pages/Shop";
 import Signup from "../pages/Signup";
 import ProtectedRoute from "./ProtectedRoute";
 
+import { AddProducts } from "../admin/AddProducts";
+import { AllProducts } from "../admin/AllProducts";
+import { Dashboard } from "../admin/Dashboard";
+import { Users } from "../admin/Users";
+import { Orders } from "../admin/Orders";
+
+
+
 const Routers = () => {
   return (
     <Routes>
@@ -18,16 +26,21 @@ const Routers = () => {
       <Route path="shop" element={<Shop />} />
       <Route path="shop/:id" element={<ProductDetails />} />
       <Route path="cart" element={<Cart />} />
-      <Route
-        path="checkout"
-        element={
-          <ProtectedRoute>
-            <Checkout />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="login" element={<Login />} />
+
+      <Route path='/*' element={<ProtectedRoute />}>
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="dashboard/all-products" element={<AllProducts />} />
+        <Route path="dashboard/add-products" element={<AddProducts />} />
+        <Route path="dashboard/users" element={<Users />} />
+        <Route path="dashboard/orders" element={<Orders />} />
+      </Route>
+
+
+
       <Route path="signup" element={<Signup />} />
+      <Route path="login" element={<Login />} />
+
     </Routes>
   );
 };

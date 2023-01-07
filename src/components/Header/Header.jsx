@@ -84,6 +84,7 @@ const Header = () => {
                 <span>DoubleH Mart</span>
               </div>
             </NavLink>
+
             <div className="nav__menu" ref={menuRef}>
               <ul className="nav__menu__lists" onClick={handleToggleMenu}>
                 {mainNav.map((item, index) => (
@@ -104,6 +105,7 @@ const Header = () => {
                 </span>
               </div>
             </div>
+
             <div className="nav__icons">
               <span className="nav__icons__fav">
                 <motion.i
@@ -112,6 +114,7 @@ const Header = () => {
                 ></motion.i>
                 <span className="nav__icons__badge">1</span>
               </span>
+
               <span className="nav__icons__cart">
                 <Link to="/cart">
                   <motion.i
@@ -124,6 +127,7 @@ const Header = () => {
                   {cart.cartTotalQuantity}
                 </span>
               </span>
+
               <div className="nav__icons__profile">
                 <motion.img
                   whileTap={{ scale: 1.2 }}
@@ -147,6 +151,11 @@ const Header = () => {
                       <motion.button whileTap={{ scale: 1.1 }} onClick={logout}>
                         Logout
                       </motion.button>
+                      <motion.button whileTap={{ scale: 1.1 }}>
+                        <Link to="/dashboard">
+                          Dashboard
+                        </Link>
+                      </motion.button>
                     </div>
                   ) : (
                     <div className="nav__icons__profile__actions__logsign">
@@ -155,11 +164,14 @@ const Header = () => {
                       </motion.button>
                       <motion.button whileTap={{ scale: 1.1 }}>
                         <Link to="/signup">Signup</Link>
+                      </motion.button> <motion.button whileTap={{ scale: 1.1 }}>
+                        <Link to="/dashboard">Dashboard</Link>
                       </motion.button>
                     </div>
                   )}
                 </div>
               </div>
+
             </div>
             <div
               className="nav__icons__mobile__menu"

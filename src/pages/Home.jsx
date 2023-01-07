@@ -8,8 +8,10 @@ import ProductLists from "../components/UI/ProductLists";
 import Clock from "../components/UI/Clock";
 
 import heroImg from "../assets/images/hero-img.png";
-import products from "../assets/fake-data/products";
+// import products from "../assets/fake-data/products";
 import counterImg from "../assets/images/counter-timer-img.png";
+
+import { useGetData } from "../custom-hooks/useGetData";
 
 const Home = () => {
   const year = new Date().getFullYear();
@@ -18,6 +20,8 @@ const Home = () => {
   const [mobileProducts, setMobileProducts] = useState([]);
   const [wirelessProducts, setWirelessProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
+
+  const { data: products, loading } = useGetData('products')
 
   useEffect(() => {
     const filterTrendingProducts = products.filter(
@@ -45,7 +49,7 @@ const Home = () => {
     setMobileProducts(filterMobileProducts);
     setWirelessProducts(filterWirelessProducts);
     setPopularProducts(filterPopularProducts);
-  }, []);
+  }, [products]);
 
   return (
     <>
@@ -85,7 +89,9 @@ const Home = () => {
             <div className="products__trending">
               <h2 className="products__trending__title">Trending Products</h2>
               <div className="products__trending__lists">
-                <ProductLists data={trending} />
+                {loading ? <h1>Loading....</h1> :
+                  <ProductLists data={trending} />
+                }
               </div>
             </div>
           </div>
@@ -94,7 +100,9 @@ const Home = () => {
             <div className="products__best-sales">
               <h2 className="products__best-sales__title">Best Sales</h2>
               <div className="products__best-sales__lists">
-                <ProductLists data={bestSalesProducts} />
+                {loading ? <h1>Loading....</h1> :
+                  <ProductLists data={bestSalesProducts} />
+                }
               </div>
             </div>
           </div>
@@ -125,8 +133,12 @@ const Home = () => {
           <div className="new__arrivals">
             <h2 className="new__arrivals__title">New Arrivals</h2>
             <div className="new__arrivals__lists">
-              <ProductLists data={mobileProducts} />
-              <ProductLists data={wirelessProducts} />
+              {loading ? <h1>Loading....</h1> :
+                <ProductLists data={mobileProducts} />
+              }
+              {loading ? <h1>Loading....</h1> :
+                <ProductLists data={wirelessProducts} />
+              }
             </div>
           </div>
         </div>
@@ -135,7 +147,9 @@ const Home = () => {
           <div className="popular__products">
             <h2 className="popular__products__title">Popular in Category</h2>
             <div className="popular__products__lists">
-              <ProductLists data={popularProducts} />
+              {loading ? <h1>Loading....</h1> :
+                <ProductLists data={popularProducts} />
+              }
             </div>
           </div>
         </div>

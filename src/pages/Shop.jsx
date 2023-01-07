@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 import ProductLists from "../components/UI/ProductLists";
 
-import products from "../assets/fake-data/products";
+import { useGetData } from "../custom-hooks/useGetData";
 const Shop = () => {
-  const [productsData, setProductsData] = useState(products);
+
+  const { data: products } = useGetData('products')
+  const [productsData, setProductsData] = useState([]);
+
+  useEffect(() => {
+    setProductsData(products)
+  }, [products])
+
 
   const handleFilter = (e) => {
     const filterValue = e.target.value;
@@ -33,7 +40,7 @@ const Shop = () => {
           <div className="shop">
             <div className="shop__filter">
               <select onChange={handleFilter}>
-                <option value="all">Filter By Category</option>
+                <option value='all'>Filter By Category</option>
                 <option value="sofa">Sofa</option>
                 <option value="mobile">Mobile</option>
                 <option value="chair">Chair</option>
@@ -60,9 +67,7 @@ const Shop = () => {
       <section>
         <div className="container">
           <div className="shop__products">
-            {productsData.length === 0 ? (
-              <h1>No products are found!</h1>
-            ) : (
+            {productsData.length === 0 ? <h1>Your shop is currently empty!</h1> : (
               <ProductLists data={productsData} />
             )}
           </div>

@@ -1,0 +1,57 @@
+.addProducts {
+    &__title {
+        margin-bottom: 3rem;
+    }
+
+    &__formGroup {
+        @include flex(start, start);
+        flex-direction: column;
+        margin-top: 12px;
+
+        &__title {
+            font-weight: 600;
+            color: $txt-red;
+        }
+
+        input,
+        select {
+            margin-top: 8px;
+            width: 100%;
+            padding: 8px 16px;
+            outline: none;
+        }
+
+        &:nth-child(5) {
+            @include flex(center, space-between);
+            flex-direction: row;
+            gap: 2rem;
+            div {
+                width: 100%;
+            }
+        }
+
+        &:nth-child(6) {
+            input {
+                display: none;
+            }
+            img {
+                width: 200px;
+                height: 200px;
+                object-fit: cover;
+            }
+        }
+    }
+
+    &__btn {
+        margin-top: 1rem;
+        padding: 10px 20px;
+        background-color: $txt-primary-color;
+        color: #fff;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        cursor: pointer;
+        width: max-content;
+    }
+}

@@ -15,14 +15,16 @@ const ProductCard = ({ item }) => {
 
   return (
     <>
-      <Link to={`/shop/${item.id}`} className="product__card">
-        <div className="product__card__img">
-          <motion.img whileHover={{ scale: 0.9 }} src={item.imgUrl} alt="" />
-        </div>
+      <div className="product__card">
+        <Link to={`/shop/${item.id}`}>
+          <div className="product__card__img">
+            <motion.img whileHover={{ scale: 0.9 }} src={item.productImg} alt="" onClick={() => window.scrollTo(0, 0)} />
+          </div>
+        </Link>
         <div className="product__card__contents">
           <div className="product__card__contents__top">
-            <h3 onClick={() => window.scrollTo(0, 0)}>
-              {item.productName}
+            <h3 >
+              {item.title}
             </h3>
             <span>{item.category}</span>
           </div>
@@ -33,7 +35,7 @@ const ProductCard = ({ item }) => {
             </motion.span>
           </div>
         </div>
-      </Link>
+      </div>
     </>
   );
 };
