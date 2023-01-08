@@ -26,9 +26,7 @@ export const AllProducts = () => {
     <Helmet title="All Products">
 
       <div className='containerDashboard'>
-
-
-        {loading ? <h1>Loading...</h1> : (
+        {
           data.map(item => (
             <div key={item.id} className="allProducts__mobile">
               <img src={item.productImg} alt="" />
@@ -40,7 +38,6 @@ export const AllProducts = () => {
               </div>
             </div>
           ))
-        )
         }
 
 

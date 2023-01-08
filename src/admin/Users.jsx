@@ -23,18 +23,16 @@ export const Users = () => {
 
             <div className='containerDashboard'>
                 {
-                    loading ? <h1>Loading...</h1> : (
-                        data?.map(user => (
-                            <div key={user.id} className="allUSers__mobile">
-                                <img src={user.photoURL} alt="" />
-                                <div className='allUSers__mobile__content'>
-                                    <div><span>Username: </span>{user.username}</div>
-                                    <div><span>Email: </span>{user.email}</div>
-                                    <motion.button className='allUSers__mobile__content__btn' whileTap={{ scale: 1.2 }} onClick={() => deleteUser(user.id)}>Remove</motion.button>
-                                </div>
+                    data?.map(user => (
+                        <div key={user.id} className="allUSers__mobile">
+                            <img src={user.photoURL} alt="" />
+                            <div className='allUSers__mobile__content'>
+                                <div><span>Username: </span>{user.username}</div>
+                                <div><span>Email: </span>{user.email}</div>
+                                <motion.button className='allUSers__mobile__content__btn' whileTap={{ scale: 1.2 }} onClick={() => deleteUser(user.id)}>Remove</motion.button>
                             </div>
-                        ))
-                    )
+                        </div>
+                    ))
                 }
 
 
