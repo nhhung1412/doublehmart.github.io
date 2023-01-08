@@ -1,4 +1,41 @@
+.allUSers__mobile {
+    @include tablet {
+        display: none;
+    }
+    @include pc {
+        display: none;
+    }
+
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 10px;
+
+    img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+    }
+
+    &__content {
+        span {
+            font-weight: 600;
+        }
+
+        &__btn {
+            padding: 8px 12px;
+            color: #fff;
+            background-color: $txt-primary-color;
+            border-radius: 5px;
+            float: right;
+        }
+    }
+}
+
 .allUsers {
+    @include mobile {
+        display: none;
+    }
     table {
         width: 100%;
         text-align: center;

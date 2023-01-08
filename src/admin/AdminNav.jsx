@@ -10,13 +10,6 @@ export const AdminNav = () => {
   const headerRef = useRef(null)
   const { currentUser } = useAuth()
 
-  const adminNav = [
-    { display: "Dashboard", path: '/dashboard' },
-    { display: "All Products", path: '/dashboard/all-products' },
-    { display: "Orders", path: '/dashboard/orders' },
-    { display: "Users", path: '/dashboard/users' },
-  ]
-
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (
@@ -31,11 +24,11 @@ export const AdminNav = () => {
   }, []);
 
   return (
-    <>
+    <div className='wrapper'>
       <header ref={headerRef} className="headerNav">
         <div className="container">
           <div className='AdNav'>
-            <NavLink to="home" className="AdNav__logo">
+            <NavLink to="/" className="AdNav__logo">
               <div className="AdNav__logo__icon">
                 <i className="fa-solid fa-store"></i>
               </div>
@@ -77,24 +70,6 @@ export const AdminNav = () => {
           </div>
         </div>
       </header >
-
-      <div className='admin__menu'>
-        <div className="container">
-          <div className="admin__menu__navigation">
-            <ul className="admin__menu__navigation__list">
-              {
-                adminNav.map((item, index) => (
-                  <li key={index}>
-                    <NavLink className={navClass => navClass.isActive ? "admin__menu__navigation__list__active" : ''} to={item.path} end>
-                      {item.display}
-                    </NavLink>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   )
 }
