@@ -152,7 +152,7 @@ const Header = () => {
                         Logout
                       </motion.button>
                       <motion.button whileTap={{ scale: 1.1 }}>
-                        <Link to="/dashboard">
+                        <Link to="/dashboard/total">
                           Dashboard
                         </Link>
                       </motion.button>
@@ -165,7 +165,7 @@ const Header = () => {
                       <motion.button whileTap={{ scale: 1.1 }}>
                         <Link to="/signup">Signup</Link>
                       </motion.button> <motion.button whileTap={{ scale: 1.1 }}>
-                        <Link to="/dashboard">Dashboard</Link>
+                        <Link to="/dashboard/total">Dashboard</Link>
                       </motion.button>
                     </div>
                   )}

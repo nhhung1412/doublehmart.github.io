@@ -20,38 +20,54 @@ export const Users = () => {
     }
     return (
         <Helmet title="Users">
-            <section>
-                <div className='container'>
-                    <div className='allUsers'>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    loading ? <h1>Loading...</h1> : (
-                                        data?.map(user => (
-                                            <tr key={user.id}>
-                                                <td>
-                                                    <img src={user.photoURL} alt="" />
-                                                </td>
-                                                <td>{user.username}</td>
-                                                <td>{user.email}</td>
-                                                <td><motion.button whileTap={{ scale: 1.2 }} onClick={() => deleteUser(user.id)}>Remove</motion.button></td>
-                                            </tr>
-                                        ))
-                                    )
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+
+            <div className='containerDashboard'>
+                {
+                    loading ? <h1>Loading...</h1> : (
+                        data?.map(user => (
+                            <div key={user.id} className="allUSers__mobile">
+                                <img src={user.photoURL} alt="" />
+                                <div className='allUSers__mobile__content'>
+                                    <div><span>Username: </span>{user.username}</div>
+                                    <div><span>Email: </span>{user.email}</div>
+                                    <motion.button className='allUSers__mobile__content__btn' whileTap={{ scale: 1.2 }} onClick={() => deleteUser(user.id)}>Remove</motion.button>
+                                </div>
+                            </div>
+                        ))
+                    )
+                }
+
+
+                <div className='allUsers'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                loading ? <h1>Loading...</h1> : (
+                                    data?.map(user => (
+                                        <tr key={user.id}>
+                                            <td>
+                                                <img src={user.photoURL} alt="" />
+                                            </td>
+                                            <td>{user.username}</td>
+                                            <td>{user.email}</td>
+                                            <td><motion.button whileTap={{ scale: 1.2 }} onClick={() => deleteUser(user.id)}>Remove</motion.button></td>
+                                        </tr>
+                                    ))
+                                )
+                            }
+                        </tbody>
+                    </table>
                 </div>
-            </section>
-        </Helmet>
+            </div >
+
+        </Helmet >
     )
 }

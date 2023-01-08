@@ -1,0 +1,32 @@
+.admin__menu {
+    height: auto;
+    width: 100%;
+    background-color: $bg-card-02;
+    &__navigation {
+        text-align: center;
+        margin: 50px 20px;
+        @include mobile {
+            margin: 30px 10px;
+        }
+        &__list {
+            @include flex(center, center);
+            flex-direction: column;
+            gap: 2.5rem;
+            width: 100%;
+            @include tablet {
+                width: max-content;
+            }
+
+            a {
+                color: $txt-primary-color;
+                font-weight: 500;
+                padding: 8px 16px;
+                border-radius: 5px;
+            }
+
+            &__active {
+                background-color: #fff;
+            }
+        }
+    }
+}

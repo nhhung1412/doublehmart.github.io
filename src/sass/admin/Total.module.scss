@@ -1,0 +1,32 @@
+.total {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    @include tablet {
+        grid-template-columns: 1fr 1fr;
+    }
+    @include mobile {
+        grid-template-columns: 1fr;
+    }
+    gap: 20px;
+    &__box:nth-child(1) {
+        background-color: #fdefe6;
+    }
+    &__box:nth-child(2) {
+        background-color: #d6e5fb;
+    }
+    &__box:nth-child(3) {
+        background-color: #e2f2b2;
+    }
+    &__box:nth-child(4) {
+        background-color: #ceebe9;
+    }
+    &__box {
+        width: 100%;
+        padding-top: 15px;
+        h2,
+        span {
+            padding: 15px 25px;
+            font-weight: 600;
+        }
+    }
+}
