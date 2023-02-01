@@ -63,7 +63,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const getReview = async () => {
       const review = []
-      const docReviewSnap = (db, 'reviews', id);
+      const docReviewSnap = await getDoc(doc(db, 'reviews', id));
       if (docReviewSnap.exists()) {
         review.push(docReviewSnap.data())
       } else {
@@ -91,10 +91,10 @@ const ProductDetails = () => {
     await addDoc(collection(db, "reviews"), {
       userName: reviewUserName,
       message: reviewUserMsg,
-      rating,
+      rating, 
     });
     toast.success('Added successfully')
-
+    document.submit.reset();
 
 
     // setTimeout(() => {
