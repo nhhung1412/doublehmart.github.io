@@ -3,10 +3,12 @@ import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 import ProductLists from "../components/UI/ProductLists";
 
+
+import products from "../assets/fake-data/products";
 import { useGetData } from "../custom-hooks/useGetData";
 const Shop = () => {
 
-  const { data: products } = useGetData('products')
+  // const { data: products } = useGetData('products')
   const [productsData, setProductsData] = useState([]);
 
   useEffect(() => {

@@ -15,13 +15,14 @@ import { useGetData } from '../custom-hooks/useGetData'
 import { db } from '../firebase.config'
 import { getDoc, doc } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
+import products from "../assets/fake-data/products";
 const ProductDetails = () => {
 
 
-  const { data: products } = useGetData('products')
+  // const { data: products } = useGetData('products')
   const { data: reviews } = useGetData('reviews')
 
-  const [product, setProduct] = useState({})
+  // const [product, setProduct] = useState({})
   const [rating, setRating] = useState(0);
   const [expand, setExpand] = useState(false);
   const [tab, setTab] = useState("desc");
@@ -31,34 +32,34 @@ const ProductDetails = () => {
 
   const { id } = useParams();
 
-
+  const product = products.find(item => item.id === id)
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getProduct = async () => {
-      const docRef = doc(db, 'products', id)
-      const docSnap = await getDoc(docRef)
-      if (docSnap.exists()) {
-        setProduct(docSnap.data())
-      } else {
-        console.log('No product!')
-      }
-    }
-    return () => {
-      getProduct()
-    }
-  }, [id])
+  // useEffect(() => {
+  //   const getProduct = async () => {
+  //     const docRef = doc(db, 'products', id)
+  //     const docSnap = await getDoc(docRef)
+  //     if (docSnap.exists()) {
+  //       setProduct(docSnap.data())
+  //     } else {
+  //       console.log('No product!')
+  //     }
+  //   }
+  //   return () => {
+  //     getProduct()
+  //   }
+  // }, [])
 
 
-  const {
-    category,
-    productImg,
-    title,
-    price,
-    shortDesc,
-    description,
-  } = product;
+  // const {
+  //   category,
+  //   productImg,
+  //   title,
+  //   price,
+  //   shortDesc,
+  //   description,
+  // } = product;
 
   useEffect(() => {
     const getReview = async () => {
@@ -111,7 +112,7 @@ const ProductDetails = () => {
     // });
   };
 
-  const relatedProducts = products.filter((e) => e.category === category);
+  const relatedProducts = products.filter((e) => e.category === product.category);
 
   const desRef = useRef(null);
   const hanldeExpand = () => {
@@ -126,15 +127,15 @@ const ProductDetails = () => {
   };
 
   return (
-    <Helmet title={title}>
+    <Helmet title={product.title}>
       <div className="container pt-40">
         <div className="productDetail">
           <div className="productDetail__img">
-            <img src={productImg} alt="" />
+            <img src={product.imgUrl} alt="" />
           </div>
           <div className="productDetail__content">
-            <h2>{title}</h2>
-            <h3>{category}</h3>
+            <h2>{product.productName}</h2>
+            <h3>{product.category}</h3>
             <div className="productDetail__content__rating">
               <ReactStars
                 count={5}
@@ -146,11 +147,11 @@ const ProductDetails = () => {
                 activeColor="#0a1d37"
               />
               <p>
-                (<span>{rating}</span> ratings)
+                (<span>{product.avgRating}</span> ratings)
               </p>
             </div>
-            <span className="productDetail__content__price">${price}</span>
-            <p className="productDetail__content__shortDesc">{shortDesc}</p>
+            <span className="productDetail__content__price">${product.price}</span>
+            <p className="productDetail__content__shortDesc">{product.shortDesc}</p>
             <motion.button
               whileTap={{ scale: 1.2 }}
               type="button"
@@ -181,7 +182,7 @@ const ProductDetails = () => {
           </div>
           {tab === "desc" ? (
             <div className={`tab__content ${expand ? "expand" : ""}`}>
-              <p>{description}</p>
+              <p>{product.description}</p>
               <button
                 className="tab__content__toggleBtn"
                 onClick={hanldeExpand}

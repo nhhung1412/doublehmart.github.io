@@ -53,10 +53,10 @@ const Cart = () => {
               <div>
                 {cart.cartItems.map((item) => (
                   <div className="cart__mobile__wrapper" key={item.id}>
-                    <img src={item.productImg} alt="" />
+                    <img src={item.imgUrl} alt="" />
 
                     <div className="cart__mobile__wrapper__content">
-                      <h4>{item.title}</h4>
+                      <h4>{item.productName}</h4>
 
                       <div className="cart__mobile__wrapper__content__bottom">
                         <span className="cart__mobile__wrapper__content__bottom__price">
@@ -114,9 +114,9 @@ const Cart = () => {
                   {cart.cartItems.map((item) => (
                     <tr key={item.id}>
                       <td>
-                        <img src={item.productImg} alt="" />
+                        <img src={item.imgUrl} alt="" />
                       </td>
-                      <td>{item.title}</td>
+                      <td>{item.productName}</td>
                       <td>${item.price}</td>
                       <td>
                         <div className="quantity">

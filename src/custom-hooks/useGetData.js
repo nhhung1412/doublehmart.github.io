@@ -20,7 +20,7 @@ export const useGetData = (collectionName) => {
         return () => {
             getData();
         }
-    }, [collectionRef])
+    }, [])
 
     return { data, loading }
 }

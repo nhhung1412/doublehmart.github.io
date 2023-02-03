@@ -8,7 +8,7 @@ import ProductLists from "../components/UI/ProductLists";
 import Clock from "../components/UI/Clock";
 
 import heroImg from "../assets/images/hero-img.png";
-// import products from "../assets/fake-data/products";
+import products from "../assets/fake-data/products";
 import counterImg from "../assets/images/counter-timer-img.png";
 
 import { useGetData } from "../custom-hooks/useGetData";
@@ -20,8 +20,9 @@ const Home = () => {
   const [mobileProducts, setMobileProducts] = useState([]);
   const [wirelessProducts, setWirelessProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const { data: products, loading } = useGetData('products')
+  // const { data: products, loading } = useGetData('products')
 
   useEffect(() => {
     const filterTrendingProducts = products.filter(
