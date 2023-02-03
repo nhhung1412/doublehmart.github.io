@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import ReactStars from "react-rating-stars-component";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-// import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { motion } from "framer-motion";
 import { addToCart } from "../redux/slices/cartSlice";
@@ -25,14 +25,24 @@ const ProductDetails = () => {
   const reviewUser = useRef("");
   const reviewMsg = useRef("");
 
+  const cart = useSelector((state) => state.cart);
+
   const { id } = useParams();
 
   const product = products.find(item => item.id === id)
 
+  const {
+    category,
+    imgUrl,
+    productName,
+    price,
+    avgRating,
+    reviews,
+    shortDesc,
+    description,
+  } = product;
+
   const dispatch = useDispatch();
-
-
-
 
   const addItem = () => {
     dispatch(addToCart(product));
@@ -40,7 +50,15 @@ const ProductDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const reviewUserName = reviewUser.current.value;
+    const reviewUserMsg = reviewMsg.current.value;
+    const previewObj = {
+      userName: reviewUserName,
+      message: reviewUserMsg,
+      rating,
+    };
     setTimeout(() => {
+      console.log(previewObj);
       document.submit.reset();
     }, 2000);
 
@@ -69,15 +87,15 @@ const ProductDetails = () => {
   };
 
   return (
-    <Helmet title={product.title}>
+    <Helmet title={productName}>
       <div className="container pt-40">
         <div className="productDetail">
           <div className="productDetail__img">
-            <img src={product.imgUrl} alt="" />
+            <img src={imgUrl} alt="" />
           </div>
           <div className="productDetail__content">
-            <h2>{product.productName}</h2>
-            <h3>{product.category}</h3>
+            <h2>{productName}</h2>
+            <h3>{category}</h3>
             <div className="productDetail__content__rating">
               <ReactStars
                 count={5}
@@ -89,11 +107,11 @@ const ProductDetails = () => {
                 activeColor="#0a1d37"
               />
               <p>
-                (<span>{product.avgRating}</span> ratings)
+                (<span>{avgRating}</span> ratings)
               </p>
             </div>
-            <span className="productDetail__content__price">${product.price}</span>
-            <p className="productDetail__content__shortDesc">{product.shortDesc}</p>
+            <span className="productDetail__content__price">${price}</span>
+            <p className="productDetail__content__shortDesc">{shortDesc}</p>
             <motion.button
               whileTap={{ scale: 1.2 }}
               type="button"
@@ -119,12 +137,12 @@ const ProductDetails = () => {
               className={`${tab === "rev" ? "active__tab" : ""}`}
               onClick={() => setTab("rev")}
             >
-              Reviews({products.reviews.length})
+              Reviews({reviews.length})
             </h6>
           </div>
           {tab === "desc" ? (
             <div className={`tab__content ${expand ? "expand" : ""}`}>
-              <p>{product.description}</p>
+              <p>{description}</p>
               <button
                 className="tab__content__toggleBtn"
                 onClick={hanldeExpand}
@@ -137,11 +155,11 @@ const ProductDetails = () => {
               <div className="tab__review__wrapper">
                 <ul>
                   {
-                    products.reviews.map((item) => (
+                    reviews.map((item) => (
                       <li key={item.id}>
-                        <h3>{item.userName}</h3>
+                        <h3>{item.reviewerName}</h3>
                         <span>({item.rating} ratings)</span>
-                        <p>{item.message}</p>
+                        <p>{item.text}</p>
                       </li>
                     ))
                   }
