@@ -48,7 +48,7 @@ const ProductDetails = () => {
     return () => {
       getProduct()
     }
-  }, [])
+  }, [id])
 
 
   const {
@@ -75,7 +75,7 @@ const ProductDetails = () => {
     return () => {
       getReview()
     }
-  }, [])
+  }, [id])
 
 
 
@@ -91,7 +91,7 @@ const ProductDetails = () => {
     await addDoc(collection(db, "reviews"), {
       userName: reviewUserName,
       message: reviewUserMsg,
-      rating, 
+      rating,
     });
     toast.success('Added successfully')
     document.submit.reset();
