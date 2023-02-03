@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./sass/index.scss";
 
-import Layout from "./components/Layout/Layout";
+import Layout from "./components/Layout";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -8,21 +8,16 @@ import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { addToCart } from "../redux/slices/cartSlice";
 
-import Helmet from "../components/Helmet/Helmet";
+import Helmet from "../components/Helmet";
 import ProductLists from "../components/UI/ProductLists";
 
-import { useGetData } from '../custom-hooks/useGetData'
-import { db } from '../firebase.config'
-import { getDoc, doc } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
+
 import products from "../assets/fake-data/products";
 const ProductDetails = () => {
 
 
-  // const { data: products } = useGetData('products')
-  const { data: reviews } = useGetData('reviews')
+  // const { data: reviews } = useGetData('reviews')
 
-  // const [product, setProduct] = useState({})
   const [rating, setRating] = useState(0);
   const [expand, setExpand] = useState(false);
   const [tab, setTab] = useState("desc");
@@ -36,47 +31,6 @@ const ProductDetails = () => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const getProduct = async () => {
-  //     const docRef = doc(db, 'products', id)
-  //     const docSnap = await getDoc(docRef)
-  //     if (docSnap.exists()) {
-  //       setProduct(docSnap.data())
-  //     } else {
-  //       console.log('No product!')
-  //     }
-  //   }
-  //   return () => {
-  //     getProduct()
-  //   }
-  // }, [])
-
-
-  // const {
-  //   category,
-  //   productImg,
-  //   title,
-  //   price,
-  //   shortDesc,
-  //   description,
-  // } = product;
-
-  useEffect(() => {
-    const getReview = async () => {
-      const review = []
-      const docReviewSnap = await getDoc(doc(db, 'reviews', id));
-      if (docReviewSnap.exists()) {
-        review.push(docReviewSnap.data())
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }
-
-    return () => {
-      getReview()
-    }
-  }, [id])
 
 
 
@@ -86,30 +40,18 @@ const ProductDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const reviewUserName = reviewUser.current.value;
-    const reviewUserMsg = reviewMsg.current.value;
-    // Add a new document with a generated id.
-    await addDoc(collection(db, "reviews"), {
-      userName: reviewUserName,
-      message: reviewUserMsg,
-      rating,
+    setTimeout(() => {
+      document.submit.reset();
+    }, 2000);
+
+    const resolveAfter2Sec = new Promise((resolve) =>
+      setTimeout(resolve, 2000)
+    );
+    toast.promise(resolveAfter2Sec, {
+      pending: "Please wait....",
+      success: "Added succesfully",
+      error: "Added unsuccesfully",
     });
-    toast.success('Added successfully')
-    document.submit.reset();
-
-
-    // setTimeout(() => {
-    //   document.submit.reset();
-    // }, 2000);
-
-    // const resolveAfter2Sec = new Promise((resolve) =>
-    //   setTimeout(resolve, 2000)
-    // );
-    // toast.promise(resolveAfter2Sec, {
-    //   pending: "Please wait....",
-    //   success: "Added succesfully",
-    //   error: "Added unsuccesfully",
-    // });
   };
 
   const relatedProducts = products.filter((e) => e.category === product.category);
@@ -177,7 +119,7 @@ const ProductDetails = () => {
               className={`${tab === "rev" ? "active__tab" : ""}`}
               onClick={() => setTab("rev")}
             >
-              Reviews({reviews.length})
+              Reviews({products.reviews.length})
             </h6>
           </div>
           {tab === "desc" ? (
@@ -195,7 +137,7 @@ const ProductDetails = () => {
               <div className="tab__review__wrapper">
                 <ul>
                   {
-                    reviews.map((item) => (
+                    products.reviews.map((item) => (
                       <li key={item.id}>
                         <h3>{item.userName}</h3>
                         <span>({item.rating} ratings)</span>

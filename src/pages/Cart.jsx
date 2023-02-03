@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import Helmet from "../components/Helmet/Helmet";
+import Helmet from "../components/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 
 import {

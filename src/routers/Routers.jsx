@@ -10,12 +10,7 @@ import Shop from "../pages/Shop";
 import Signup from "../pages/Signup";
 import ProtectedRoute from "./ProtectedRoute";
 
-import { AddProducts } from "../admin/AddProducts";
-import { AllProducts } from "../admin/AllProducts";
-import { Total } from "../admin/Total";
-import { Dashboard } from "../admin/Dashboard";
-import { Users } from "../admin/Users";
-import { Orders } from "../admin/Orders";
+
 
 
 
@@ -30,16 +25,7 @@ const Routers = () => {
 
       <Route path='/*' element={<ProtectedRoute />}>
         <Route path="checkout" element={<Checkout />} />
-        <Route path="dashboard" element={<Dashboard />} >
-          <Route path="total" element={<Total />} />
-          <Route path="all-products" element={<AllProducts />} />
-          <Route path="add-products" element={<AddProducts />} />
-          <Route path="users" element={<Users />} />
-          <Route path="orders" element={<Orders />} />
-        </Route>
       </Route>
-
-
 
       <Route path="signup" element={<Signup />} />
       <Route path="login" element={<Login />} />

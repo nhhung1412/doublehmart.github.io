@@ -3,22 +3,27 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { motion } from "framer-motion";
-import userIcon from "../../assets/images/user-icon.png";
+import userIcon from "../assets/images/user-icon.png";
 
-import useAuth from "../../custom-hooks/useAuth";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase.config";
 
-import { getTotals } from "../../redux/slices/cartSlice";
+import { getTotals } from "../redux/slices/cartSlice";
+
 import { toast } from "react-toastify";
+
+import useAuth from "../hooks/useAuth";
+import { auth } from "../firebase.config";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
   const dispatch = useDispatch();
+
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const profileRef = useRef(null);
-  const { currentUser } = useAuth();
+
   const navigate = useNavigate();
+
+  const { currentUser } = useAuth()
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -34,14 +39,15 @@ const Header = () => {
   }, []);
 
   const logout = () => {
+
     signOut(auth)
       .then(() => {
-        toast.success("Logged out");
-        navigate("/home");
-      })
-      .catch((error) => {
+        toast.success('Sign out successfully')
+        navigate('/home')
+      }).catch(error => {
         toast.error(error.message);
-      });
+      })
+
   };
 
   const cart = useSelector((state) => state.cart);
@@ -151,11 +157,6 @@ const Header = () => {
                       <motion.button whileTap={{ scale: 1.1 }} onClick={logout}>
                         Logout
                       </motion.button>
-                      <motion.button whileTap={{ scale: 1.1 }}>
-                        <Link to="/dashboard/total">
-                          Dashboard
-                        </Link>
-                      </motion.button>
                     </div>
                   ) : (
                     <div className="nav__icons__profile__actions__logsign">
@@ -164,8 +165,6 @@ const Header = () => {
                       </motion.button>
                       <motion.button whileTap={{ scale: 1.1 }}>
                         <Link to="/signup">Signup</Link>
-                      </motion.button> <motion.button whileTap={{ scale: 1.1 }}>
-                        <Link to="/dashboard/total">Dashboard</Link>
                       </motion.button>
                     </div>
                   )}

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
-import Helmet from "../components/Helmet/Helmet";
+import Helmet from "../components/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 
 import { useSelector, useDispatch } from "react-redux";

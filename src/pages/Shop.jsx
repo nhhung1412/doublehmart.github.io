@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import CommonSection from "../components/UI/CommonSection";
-import Helmet from "../components/Helmet/Helmet";
+import Helmet from "../components/Helmet";
 import ProductLists from "../components/UI/ProductLists";
 
 
 import products from "../assets/fake-data/products";
-import { useGetData } from "../custom-hooks/useGetData";
 const Shop = () => {
 
   // const { data: products } = useGetData('products')

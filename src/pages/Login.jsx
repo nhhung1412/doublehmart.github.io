@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
-import Helmet from "../components/Helmet/Helmet";
+import Helmet from "../components/Helmet";
 
 import { auth } from "../firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -13,6 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
 
   const signIn = async (e) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ const Login = () => {
       );
       const user = userCredential.user;
       console.log(user);
+
       toast.success("Successfully logged in");
       navigate("/checkout");
     } catch (error) {

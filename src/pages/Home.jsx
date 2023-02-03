@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import Helmet from "../components/Helmet/Helmet";
+import Helmet from "../components/Helmet";
 import Services from "../services/Services";
 import ProductLists from "../components/UI/ProductLists";
 import Clock from "../components/UI/Clock";
@@ -11,7 +11,6 @@ import heroImg from "../assets/images/hero-img.png";
 import products from "../assets/fake-data/products";
 import counterImg from "../assets/images/counter-timer-img.png";
 
-import { useGetData } from "../custom-hooks/useGetData";
 
 const Home = () => {
   const year = new Date().getFullYear();

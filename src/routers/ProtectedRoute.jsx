@@ -1,6 +1,8 @@
 import React from "react";
-import useAuth from "../custom-hooks/useAuth";
 import { Navigate, Outlet } from "react-router-dom";
+// import { auth } from "../firebase.config";
+import useAuth from "../hooks/useAuth";
+
 
 
 const ProtectedRoute = () => {

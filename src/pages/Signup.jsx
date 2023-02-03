@@ -3,85 +3,67 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
-import { auth, storage, db } from "../firebase.config";
-import { signOut } from "firebase/auth";
+import { auth, db, storage } from '../firebase.config'
 
+import { updateProfile } from "firebase/auth";
 
-import Helmet from "../components/Helmet/Helmet";
+import Helmet from "../components/Helmet";
 
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const [data, setData] = useState({})
-  const [file, setFile] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const userInputs = [
-    {
-      id: 'username',
-      type: 'text',
-      placecholder: 'Enter your username',
-    },
-    {
-      id: 'email',
-      type: 'text',
-      placecholder: 'Enter your email',
-    },
-    {
-      id: 'password',
-      type: 'password',
-      placecholder: 'Enter your password'
-    }
-  ]
-
-  // 
-  const handleInput = (e) => {
-    const id = e.target.id;
-    const value = e.target.value;
-    setData({ ...data, [id]: value })
-  }
-  // sign up
   const signup = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setLoading(true);
-
     try {
+      setLoading(false);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const user = userCredential.user
+      console.log(user);
       const fileName = `images/ ${Date.now() + file.name}`;
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file)
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      const user = userCredential.user;
       uploadTask.on(
         (error) => {
           toast.error(error.message)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            setData({ ...data, img: downloadURL })
-            // update user profile 
-            await updateProfile(user, {
-              displayName: data.username,
-              photoURL: downloadURL,
-            });
-            // store user data in firebase database
-            await setDoc(doc(db, "users", user.uid), {
-              ...data,
-              photoURL: downloadURL,
-              timeStamp: serverTimestamp()
-            });
+
+            if (downloadURL) {
+              console.log('image: ', file);
+              await setDoc(doc(db, 'users', user.uid), {
+                displayName: name,
+                email: email,
+                photoURL: downloadURL,
+                timeStamp: serverTimestamp()
+              })
+              await updateProfile(user, {
+                displayName: name,
+                photoURL: downloadURL,
+              })
+            } else {
+              console.log('not image url');
+              navigate("/signup");
+            }
           });
-        }
-      );
-      setLoading(false);
-      toast.success("Account created succesfully");
+        })
+
+
+
+
+      navigate("/login");
+      toast.success("Successfully signed up");
       signOut(auth)
         .then(() => {
           navigate("/login");
@@ -89,16 +71,18 @@ const Signup = () => {
         .catch((error) => {
           toast.error(error.message);
         });
-
     } catch (error) {
       setLoading(false);
-      toast.error("something went wrong!");
+      toast.error(error.message);
     }
-
     return () => {
       signup()
     }
-  };
+
+  }
+
+
+
 
   return (
     <Helmet title="Signup">
@@ -110,19 +94,37 @@ const Signup = () => {
             <div className="signup">
               <h3 className="signup__title">Signup</h3>
               <form action="" className="signup__form" onSubmit={signup}>
-                {
-                  userInputs.map((input) => (
-                    <input
 
-                      id={input.id}
-                      type={input.type}
-                      placeholder={input.placecholder}
-                      onChange={handleInput}
-                      className="signup__form__input"
-                      required
-                    />
-                  ))
-                }
+                <input
+                  value={name}
+                  type='text'
+                  placeholder='Enter your username'
+                  onChange={(e) => setName(e.target.value)}
+                  className="signup__form__input"
+                  required
+                />
+
+
+                <input
+                  value={email}
+                  type='text'
+                  placeholder='Enter your email'
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="signup__form__input"
+                  required
+                />
+
+
+                <input
+                  value={password}
+                  type='password'
+                  placeholder='Enter your password'
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="signup__form__input"
+                  required
+                />
+
+
                 <label className="signup__form__input__file">
                   <input
                     type="file"
@@ -130,11 +132,9 @@ const Signup = () => {
                   />
                   Choose your avatar profile
                   <img
-                    src={
-                      file
-                        ? URL.createObjectURL(file)
-                        : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-                    }
+                    src={file
+                      ? URL.createObjectURL(file)
+                      : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"}
                     alt=""
                   />
                 </label>
