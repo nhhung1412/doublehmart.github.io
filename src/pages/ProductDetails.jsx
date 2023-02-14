@@ -99,7 +99,7 @@ const ProductDetails = () => {
             <div className="productDetail__content__rating">
               <ReactStars
                 count={5}
-                value={rating}
+                value={avgRating}
                 size={40}
                 isHalf={true}
                 edit={false}
